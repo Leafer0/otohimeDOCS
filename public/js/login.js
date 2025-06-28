@@ -136,7 +136,7 @@ async function checkServerStatus() {
     if (!statusElement) return;
 
     try {
-        const response = await fetch('http://47.98.223.44:11451/test', {
+        const response = await fetch('https://a.test.gllc.moe/test', {
             method: 'GET',
             cache: 'no-store'
         });
@@ -290,7 +290,7 @@ async function handleLoginSuccess(authToken) {
     localStorage.setItem('authToken', authToken);
     
     try {
-        const response = await fetch('http://47.98.223.44:11451/api/validate', {
+        const response = await fetch('https://a.test.gllc.moe/test', {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
