@@ -175,7 +175,6 @@ async function checkServerStatus() {
 async function handleLoginFormSubmit(e) {
     e.preventDefault();
     if (TEST_MODE) {
-        // 测试模式直接使用模拟token
         localStorage.setItem('authToken', TEST_TOKEN);
         showResponse({status: "测试登录成功"}, "测试模式");
         setTimeout(() => window.location.href = "SY.html?test=1", 1000);
@@ -206,38 +205,27 @@ async function handleLoginFormSubmit(e) {
         }
         
         // HTTP请求
-        const response = await fetch('/api/login', {
+         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token: your_token })
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token })
         });
+
         if (!response.ok) {
-            throw new Error(`HTTP错误! 状态码: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP错误! 状态码: ${response.status}`);
         }
         
-        // 从Cookie中提取token
-        const cookieHeader = response.headers.get('Set-Cookie');
-        if (!cookieHeader) {
-            throw new Error('响应中未找到Set-Cookie头');
-        }
+        const data = await response.json();
+        localStorage.setItem('authToken', data.token);
         
-        const tokenMatch = cookieHeader.match(/token=([^;]+)/);
-        if (!tokenMatch) {
-            throw new Error('无法从Cookie中提取token');
-        }
-        
-        const authToken = tokenMatch[1];
-        localStorage.setItem('authToken', authToken);
-        
-        // 显示成功消息
         showResponse({
             status: '登录成功',
-            token: authToken
+            user: data.user
         }, '登录成功');
         
-        // 2秒后跳转到首页
         setTimeout(() => {
             window.location.href = 'SY.html';
         }, 2000);
@@ -248,12 +236,11 @@ async function handleLoginFormSubmit(e) {
             error: error.message,
             details: error.stack
         }, '登录失败');
-        
     } finally {
         // 重置按钮状态
-        if (btnText) btnText.textContent = '登录';
-        if (loginBtn) loginBtn.disabled = false;
-        if (loadingIcon) loadingIcon.classList.add('hidden');
+        btnText.textContent = '登录';
+        loginBtn.disabled = false;
+        loadingIcon.classList.add('hidden');
     }
 }
 

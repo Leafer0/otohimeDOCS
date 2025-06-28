@@ -1,5 +1,5 @@
 // script.js
-
+import { ApiService } from './api.js';
 // 检查登录状态
 async function checkLoginStatus() {
     let token = localStorage.getItem('authToken');
@@ -41,12 +41,8 @@ async function checkLoginStatus() {
 // 验证token有效性
 async function validateToken(token) {
     try {
-        const response = await fetch('http://47.98.223.44:11451/api/validate', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return response.ok;
+        await ApiService.validateToken(token);
+        return true;
     } catch (error) {
         console.error('验证token失败:', error);
         return false;
@@ -56,18 +52,9 @@ async function validateToken(token) {
 // 加载用户数据
 async function loadUserData(token) {
     try {
-        const response = await fetch('http://47.98.223.44:11451/api/user', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        
-        if (response.ok) {
-            const userData = await response.json();
-            updateUserUI(userData);
-            return true;
-        }
-        return false;
+        const userData = await ApiService.getUserData(token);
+        updateUserUI(userData);
+        return true;
     } catch (error) {
         console.error('获取用户数据失败:', error);
         return false;
