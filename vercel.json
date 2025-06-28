@@ -1,8 +1,24 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "public/**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/js/**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/pic/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     { "src": "/", "dest": "/public/SY.html" },
     { "src": "/login", "dest": "/public/DL.html" },
+    { "src": "/js/(.*)", "dest": "/public/js/$1" },
+    { "src": "/pic/(.*)", "dest": "/public/pic/$1" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
