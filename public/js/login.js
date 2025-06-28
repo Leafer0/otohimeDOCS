@@ -1,5 +1,5 @@
 // login.js
-const TEST_MODE = true; // 设为false关闭测试模式
+const TEST_MODE = false; // 设为false关闭测试模式
 const TEST_TOKEN = "test_token_123"; 
 // 显示获取token的提示
 function setupTokenHelpTooltip() {
@@ -206,14 +206,13 @@ async function handleLoginFormSubmit(e) {
         }
         
         // HTTP请求
-        const response = await fetch('http://47.98.223.44:11451/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `t=${encodeURIComponent(token)}`
-        });
-        
+                'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `t=${encodeURIComponent(token)}`
+    });
         if (!response.ok) {
             throw new Error(`HTTP错误! 状态码: ${response.status}`);
         }
