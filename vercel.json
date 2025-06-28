@@ -1,21 +1,19 @@
 {
   "version": 2,
-  "public": "public", 
-  "routes": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/public/$1",
-      "headers": {
-        "Cache-Control": "s-maxage=0"
-      }
+      "source": "/",
+      "destination": "/public/SY.html"
     },
     {
-      "src": "/",
-      "dest": "/public/SY.html"
+      "source": "/login",
+      "destination": "/public/DL.html"
     },
     {
-      "src": "/login",
-      "dest": "/public/DL.html"
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
+}
 }
