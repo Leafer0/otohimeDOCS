@@ -209,10 +209,10 @@ async function handleLoginFormSubmit(e) {
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        body: `t=${encodeURIComponent(token)}`
-    });
+        body: JSON.stringify({ token: your_token })
+        });
         if (!response.ok) {
             throw new Error(`HTTP错误! 状态码: ${response.status}`);
         }
