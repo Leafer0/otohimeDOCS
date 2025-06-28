@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "public": "public", 
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1",
+      "headers": {
+        "Cache-Control": "s-maxage=0"
+      }
+    },
+    {
+      "src": "/",
+      "dest": "/public/SY.html"
+    },
+    {
+      "src": "/login",
+      "dest": "/public/DL.html"
+    }
+  ]
+}

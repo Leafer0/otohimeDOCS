@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统登录</title>
+    <script src="./js/login.js" type="module"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+            
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .login-container {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .input-field:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* 加载动画 */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        /* 过渡效果 */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="login-container bg-white rounded-xl p-8 w-full max-w-md">
+        <!-- 登录标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">登录</h1>
+            <p class="text-gray-600 mt-2">请输入您的Token</p>
+        </div>
+        <div class="login-container bg-white rounded-xl p-8 w-full max-w-md">
+    <!-- 添加返回首页链接 -->
+    <div class="mb-4">
+        <a href="SY.html" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            返回首页
+        </a>
+    </div>
+    
+        <!-- 登录表单 -->
+        <form id="loginForm" class="space-y-6">
+            <div>
+            
+                <div class="relative">
+                    <input 
+                        type="password" 
+                        id="token" 
+                        name="token"
+                        value=""
+                        class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        placeholder="请输入您的Token"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button 
+                        type="button" 
+                        id="toggleTokenVisibility"
+                        class="absolute right-3 top-3 text-gray-500 hover:text-gray-700 focus:outline-none"
+                        aria-label="切换令牌可见性"
+                    >
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input 
+                        id="remember" 
+                        name="remember" 
+                        type="checkbox" 
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    >
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">记住我</label>
+                </div>
+                
+               <a href="#" id="howToGetToken" class="text-sm text-blue-600 hover:text-blue-500 hover:underline">如何获取token</a>
+            </div>
+            
+            <div>
+                <button 
+                    type="submit" 
+                    id="loginBtn"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all"
+                >
+                    <span id="btnText">登录</span>
+                    <svg id="loadingIcon" class="hidden animate-spin -mr-1 ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </div>
+        </form>
+        
+        <!-- 服务器状态 -->
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-500">服务器状态</span>
+                <span id="serverStatus" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                    </svg>
+                    连接正常
+                </span>
+            </div>
+            <div class="mt-1 text-xs text-gray-500" id="serverUrl">若服务器连接失败，请联系管理</div>
+        </div>
+    </div>
+
+    <!-- 响应消息弹窗 -->
+    <div id="responseModal" class="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 hidden z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-start">
+                <h3 id="modalTitle" class="text-lg font-medium text-gray-900">登录结果</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-4">
+                <pre id="responseContent" class="bg-gray-100 p-4 rounded overflow-auto text-sm max-h-96"></pre>
+            </div>
+            <div class="mt-4 flex justify-end space-x-2">
+                <button id="copyResponse" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                    复制结果
+                </button>
+                <button id="closeModalBtn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
