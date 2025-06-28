@@ -1,19 +1,17 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/public/SY.html"
+      "src": "/",
+      "dest": "/public/SY.html"
     },
     {
-      "source": "/login",
-      "destination": "/public/DL.html"
+      "src": "/login",
+      "dest": "/public/DL.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/public/$1"
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ]
 }
-
